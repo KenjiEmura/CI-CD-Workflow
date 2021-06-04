@@ -9,6 +9,7 @@ function App() {
         <p>
           This is my <code>CI/CD</code> dummy React Project
         </p>
+        <p>App version 2.0</p>
         <a
           className="App-link"
           href="https://reactjs.org"
