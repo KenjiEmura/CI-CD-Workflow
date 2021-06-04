@@ -16,7 +16,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "16"
-          check-latest: true
       - run: yarn install --frozen-lockfile
       - run: yarn format:check
       - run: yarn test --coverage
