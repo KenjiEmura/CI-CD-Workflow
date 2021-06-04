@@ -38,11 +38,13 @@ jobs:
           name: code-coverage-results
           path: coverage
 
-      # These steps will run only if the triggering event is the "push" event
+      # These steps will run only if the triggering event is the "push" event, which in reallity happens when you merge the
+      # workflow branch into the develop branch
       - name: Build Project
         if: github.event_name == 'push'
         run: yarn build
       - name: Upload built project
+        if: github.event_name == 'push'
         uses: actions/upload-artifact@v2
         with:
           name: built-project
