@@ -32,10 +32,21 @@ jobs:
       - run: yarn test --coverage
         env:
           CI: true
+      - name: Upload test --coverage results
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-results
+          path: coverage
+
       # These steps will run only if the triggering event is the "push" event
       - name: Build Project
         if: github.event_name == 'push'
         run: yarn build
+      - name: Upload built project
+        uses: actions/upload-artifact@v2
+        with:
+          name: built-project
+          path: build
       - name: Deploy to staging
         if: github.event_name == 'push'
         run: npx surge --project ./build --domain kenji.surge.sh
