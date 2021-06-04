@@ -2,7 +2,7 @@ name: CI
 
 on:
   pull_request:
-    types: [assigned, opened, reopened]
+    types: [assigned, opened, reopened, synchronize]
     branches: [develop]
   push:
     branches: [develop]
