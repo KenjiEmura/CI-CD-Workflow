@@ -4,6 +4,8 @@ on:
   pull_request:
     types: [closed, assigned, opened, reopened]
     branches: [develop]
+  push:
+    branches: [develop]
 
 jobs:
   build:
@@ -20,3 +22,13 @@ jobs:
       - run: yarn test --coverage
         env:
           CI: true
+      # These steps will run only if the triggering event is the "push" event
+      - name: Build Project
+        if: github.event_name == 'push'
+        run: yarn build
+      - name: Deploy to staging
+        if: github.event_name == 'push'
+        run: npx surge --project ./build --domain kenji.surge.sh
+        env:
+          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
