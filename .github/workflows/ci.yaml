@@ -1,0 +1,64 @@
+name: CI Workflow
+
+on:
+  pull_request:
+    types: [assigned, opened, reopened, synchronize]
+    branches: [develop, main]
+  push:
+    branches: [develop, main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Use NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+          check-latest: true
+      - run: yarn install --frozen-lockfile
+      - run: yarn format:check
+      - run: yarn test --coverage
+        env:
+          CI: true
+      - name: Upload test --coverage results
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-results
+          path: coverage
+
+      # These steps will run only if the triggering event is the "push" event, which in reallity happens when you merge the
+      # workflow branch into the develop branch
+      - name: Build Project
+        if: github.event_name == 'push'
+        run: yarn build
+      - name: Upload built project
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@v2
+        with:
+          name: built-project
+          path: build
+      # Create a release using the 'semantic-release' library
+      - name: Create a Release
+        # Here we make sure that we only run this step when the push is being made to 'main' branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy to staging
+        if: github.event_name == 'push'
+        run: npx surge --project ./build --domain kenji.surge.sh
+        env:
+          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
