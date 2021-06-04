@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Testing the Branch protection rules...
+          Kenji's React App
         </a>
       </header>
     </div>
