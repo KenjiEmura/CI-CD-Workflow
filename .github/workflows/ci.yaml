@@ -2,7 +2,7 @@ name: CI
 
 on:
   pull_request:
-    types: [assigned, opened, reopened]
+    types: [assigned, opened, reopened, synchronize]
     branches: [develop]
   push:
     branches: [develop]
@@ -32,10 +32,23 @@ jobs:
       - run: yarn test --coverage
         env:
           CI: true
-      # These steps will run only if the triggering event is the "push" event
+      - name: Upload test --coverage results
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-results
+          path: coverage
+
+      # These steps will run only if the triggering event is the "push" event, which in reallity happens when you merge the
+      # workflow branch into the develop branch
       - name: Build Project
         if: github.event_name == 'push'
         run: yarn build
+      - name: Upload built project
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@v2
+        with:
+          name: built-project
+          path: build
       - name: Deploy to staging
         if: github.event_name == 'push'
         run: npx surge --project ./build --domain kenji.surge.sh
