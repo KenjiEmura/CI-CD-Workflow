@@ -37,14 +37,26 @@ jobs:
         with:
           name: code-coverage-results
           path: coverage
-
-      # These steps will run only if the triggering event is the "push" event, which in reallity happens when you merge the
-      # workflow branch into the develop branch
       - name: Build Project
         if: github.event_name == 'push'
         run: yarn build
+
+      # This will only run when pushing (merging) to the develop branch, which in reallity will be triggered when we merge (push) a pull request into develop.
+      - name: Deploy to staging
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+        run: npx surge --project ./build --domain staging.kenji.surge.sh
+        env:
+          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+
+      # This will only run when pushing (merging) to the main branch, which in reallity will be triggered when we merge (push) a pull request from develop into main.
+      - name: ZIP Assets
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          zip -r build.zip ./build     
+          zip -r coverage.zip ./coverage
       - name: Upload built project
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v2
         with:
           name: built-project
@@ -63,8 +75,8 @@ jobs:
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Deploy to staging
-        if: github.event_name == 'push'
+      - name: Deploy to production
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: npx surge --project ./build --domain kenji.surge.sh
         env:
           SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
