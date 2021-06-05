@@ -37,11 +37,17 @@ jobs:
         with:
           name: code-coverage-results
           path: coverage
+      # This will only run when pushing (merging) to the develop branch, which in reallity will be triggered when we merge (push) a pull request into develop.
+      - name: Deploy to staging
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+        run: npx surge --project ./build --domain staging.kenji.surge.sh
+        env:
+          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
 
-      # These steps will run only if the triggering event is the "push" event, which in reallity happens when you merge the
-      # workflow branch into the develop branch
+      # This will only run when pushing (merging) to the main branch, which in reallity will be triggered when we merge (push) a pull request from develop into main.
       - name: Build Project
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: yarn build
       - name: Upload built project
         if: github.event_name == 'push'
@@ -49,13 +55,11 @@ jobs:
         with:
           name: built-project
           path: build
-
       - name: ZIP Assets
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           zip -r build.zip ./build     
           zip -r coverage.zip ./coverage
-
       # Create a release using the 'semantic-release' library
       - name: Create a Release
         # Here we make sure that we only run this step when the push is being made to 'main' branch
@@ -64,7 +68,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy to staging
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: npx surge --project ./build --domain kenji.surge.sh
         env:
           SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
