@@ -16,7 +16,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Kenji's React
+          Kenji's React App
         </a>
       </header>
     </div>
