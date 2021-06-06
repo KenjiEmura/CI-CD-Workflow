@@ -9,14 +9,14 @@ function App() {
         <p>
           This is my <code>CI/CD</code> dummy React Project
         </p>
-        <p>App version 2.0</p>
+        <p>App version 3.0</p>
         <a
           className="App-link"
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Kenji's React App
+          Kenji's React
         </a>
       </header>
     </div>
