@@ -1,4 +1,4 @@
-![](https://github.com/KenjiEmura/CI-CD-Workflow/workflows/CI Workflow/badge.svg?branch-develop&event=push)
+![](https://github.com/KenjiEmura/CI-CD-Workflow/workflows/CI/badge.svg?branch-develop&event=push)
 
 
 # Getting Started with Create React App
