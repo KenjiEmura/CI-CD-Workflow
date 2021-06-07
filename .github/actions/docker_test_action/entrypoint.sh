@@ -25,4 +25,4 @@ echo "A line inside the expandable log"
 echo "A line inside the expandable log"
 echo "::endgroup::"
 
-echo '::set-env name=CUSTOM_ENV_VARIABLE::hellooooooooo'
+echo "custom_env_variable=helloooooooo" >> $CUSTOM_ENV_VARIABLE
