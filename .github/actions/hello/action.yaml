@@ -1,0 +1,14 @@
+name: Hello World
+author: Kenji Emura
+description: This action just takes a name as an input and outputs a greeting
+iputs:
+  who-to-greet:
+    description: "Who to greet?"
+    required: true
+    default: user
+outputs:
+  time:
+    description: "The greeting time"
+runs:
+  using: "node16"
+  main: "dist/index.js"

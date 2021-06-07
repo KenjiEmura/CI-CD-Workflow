@@ -1,0 +1,16 @@
+name: Custom Action
+on:
+  repository_dispatch:
+    types: [custom_action]
+  
+jobs:
+  test-action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/hello
+        id: hello
+        with:
+          who-to-greet: "Kenji Emura"
+      - run: |
+        echo "Time: ${{ steps.hello.outputs.time }}"
