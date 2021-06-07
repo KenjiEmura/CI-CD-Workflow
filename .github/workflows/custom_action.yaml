@@ -1,4 +1,4 @@
-name: Custom Action
+name: Custom Actions
 on:
   repository_dispatch:
     types: [custom_action]
@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/hello
+      - uses: ./.github/actions/test_action
         id: hello
         with:
           who-to-greet: "Kenji Emura"
@@ -16,3 +16,18 @@ jobs:
         run: |
           echo "Time: ${{ steps.hello.outputs.time }}"
           echo "The custom env variable that we created says: $CUSTOM_ENV_VARIABLE"
+
+  create-issue-action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/generate_issue
+        id: create_issue
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: Issue created from the 'custom_action.yaml'
+          body: The 'custom_action.yaml' has two jobs, this issue is created from the second one.
+          assignees: |
+            kenjiemura
+      - run: |
+          echo ${{ steps.create_issue.outputs.issue }}

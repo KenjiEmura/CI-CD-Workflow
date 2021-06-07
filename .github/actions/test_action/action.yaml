@@ -1,14 +1,18 @@
 name: Hello World
 author: Kenji Emura
 description: This action just takes a name as an input and outputs a greeting
+
 inputs:
   who-to-greet:
     description: "Who to greet?"
     required: true
     default: user
+
 outputs:
   time:
     description: "The greeting time"
+
 runs:
   using: "node12"
+  # This is the file that will be run
   main: "dist/index.js"
