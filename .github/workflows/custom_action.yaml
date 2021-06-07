@@ -12,4 +12,6 @@ jobs:
         id: hello
         with:
           who-to-greet: "Kenji Emura"
-      - run: echo "Time ${{ steps.hello.outputs.time }}"
+      - name: Run the greeting time
+        run: |
+          echo "Time: ${{ steps.hello.outputs.time }}"
