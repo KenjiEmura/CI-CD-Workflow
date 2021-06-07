@@ -8,7 +8,10 @@ try {
 
   const time = new Date();
   core.setOutput("time", time.toTimeString());
-  console.log("The @actions/github object: ", JSON.stringify(github, null, "\t"));
+  console.log(
+    "The @actions/github object: ",
+    JSON.stringify(github, null, "\t")
+  );
   console.log("The @actions/core object: ", JSON.stringify(core, null, "\t"));
 } catch (error) {
   core.setFailed(error.message);
