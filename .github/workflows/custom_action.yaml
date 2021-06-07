@@ -25,7 +25,7 @@ jobs:
         id: create_issue
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          title: Issue created from the 'custom_action.yaml'
+          title: Automatic issue created from the 'custom_action.yaml'
           body: The 'custom_action.yaml' has two jobs, this issue is created from the second one.
           assignees: |
             kenjiemura
