@@ -1,6 +1,9 @@
 #!/bin/sh -l
 
-Here we are going to do the same that we did on the 'test_action' folder using JavaScript
+# Here we are going to do the same that we did on the 'test_action' folder using JavaScript
+
+# To make this work, you have to give this file executable permission by running the next command:
+# chmod +x .github/actions/docker_test_action/entrypoint.sh
 
 echo "::debug:: This is a debug message"
 echo "::warning::This is a warning message"
