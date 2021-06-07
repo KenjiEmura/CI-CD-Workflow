@@ -116,28 +116,30 @@ module.exports = /******/ (function (modules, runtime) {
       const core = __webpack_require__(470);
       const github = __webpack_require__(469);
 
-      try {
-        const token = core.getInput("token");
-        const title = core.getInput("title");
-        const body = core.getInput("body");
-        const assignees = core.getInput("assignees");
+      async () => {
+        try {
+          const token = core.getInput("token");
+          const title = core.getInput("title");
+          const body = core.getInput("body");
+          const assignees = core.getInput("assignees");
 
-        // The octokit lives inside our github package
-        // https://octokit.github.io/rest.js/v18#issues
-        const octokit = new github.getOctokit(token);
-        const response = octokit.rest.issues.create({
-          // owner: github.context.repo.owner,
-          // repo: github.context.repo.repo,
-          ...github.context.repo,
-          title,
-          body,
-          assignees: assignees ? assignees.split("\n") : undefined,
-        });
+          // The octokit lives inside our github package
+          // https://octokit.github.io/rest.js/v18#issues
+          const octokit = new github.getOctokit(token);
+          const response = await octokit.rest.issues.create({
+            // owner: github.context.repo.owner,
+            // repo: github.context.repo.repo,
+            ...github.context.repo,
+            title,
+            body,
+            assignees: assignees ? assignees.split("\n") : undefined,
+          });
 
-        core.setOutput("issue", JSON.stringify(response.data));
-      } catch (error) {
-        core.setFailed(error.message);
-      }
+          core.setOutput("issue", JSON.stringify(response.data));
+        } catch (error) {
+          core.setFailed(error.message);
+        }
+      };
 
       /***/
     },
