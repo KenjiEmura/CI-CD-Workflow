@@ -30,4 +30,4 @@ jobs:
           assignees: |
             kenjiemura
       - run: |
-          echo "create_issue outputs: ${{ steps.create_issue.outputs.issue }}""
+          echo "create_issue outputs: ${{ steps.create_issue.outputs.issue }}"
