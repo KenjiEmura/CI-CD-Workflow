@@ -1,0 +1,21 @@
+name: Open Github Issue
+author: Kenji Emura
+descritpion: Opens a github issue
+
+inputs:
+  who-to-greet:
+    description: "Who to greet?"
+    required: true
+    default: user
+
+outputs:
+  time:
+    description: "The greeting time"
+
+runs:
+  using: "docker"
+  # You can also use an image from Docker Hub, etc.
+  image: "Dockerfile"
+  # When choosing 'Dockerfile' as your image, you can set env variables, entrypoints, args, etc.
+  args:
+    - ${{ inputs.who-to-greet }}

@@ -4,11 +4,24 @@ on:
     types: [custom_action]
 
 jobs:
-  test-action:
+  test-action-javascript:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/test_action
+        id: hello
+        with:
+          who-to-greet: "Kenji Emura"
+      - name: Run the greeting time
+        run: |
+          echo "Time: ${{ steps.hello.outputs.time }}"
+          echo "The custom env variable that we created says: $CUSTOM_ENV_VARIABLE"
+
+  test-action-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/docker_test_action
         id: hello
         with:
           who-to-greet: "Kenji Emura"
@@ -30,4 +43,4 @@ jobs:
           assignees: |
             kenjiemura
       - run: |
-          echo "create_issue outputs: ${{ steps.create_issue.outputs.issue }}"
+          echo "steps.create_issue: ${{ steps.create_issue }}"
