@@ -15,7 +15,7 @@ try {
   // The octokit lives inside our github package
   // https://octokit.github.io/rest.js/v18#issues
   const octokit = new github.getOctokit(token);
-  const response = octokit.rest.issues.addAssignees({
+  const response = octokit.rest.issues.create({
     // owner: github.context.repo.owner,
     // repo: github.context.repo.repo,
     ...github.context.repo,
