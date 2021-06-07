@@ -12,7 +12,7 @@ jobs:
         id: hello
         with:
           who-to-greet: "Kenji Emura"
-      - name: Run the greeting time
+      - name: JavaScript - Print out the greeting time
         run: |
           echo "Time: ${{ steps.hello.outputs.time }}"
           echo "The custom env variable that we created says: $CUSTOM_ENV_VARIABLE"
@@ -25,7 +25,7 @@ jobs:
         id: hello
         with:
           who-to-greet: "Kenji Emura"
-      - name: Run the greeting time
+      - name: Docker - Print out the greeting time
         run: |
           echo "Time: ${{ steps.hello.outputs.time }}"
           echo "The custom env variable that we created says: ${{ env.custom_env_variable }}"
