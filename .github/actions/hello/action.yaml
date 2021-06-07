@@ -1,7 +1,7 @@
 name: Hello World
 author: Kenji Emura
 description: This action just takes a name as an input and outputs a greeting
-iputs:
+inputs:
   who-to-greet:
     description: "Who to greet?"
     required: true
