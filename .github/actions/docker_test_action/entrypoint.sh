@@ -25,4 +25,4 @@ echo "A line inside the expandable log"
 echo "A line inside the expandable log"
 echo "::endgroup::"
 
-echo "custom_env_variable=helloooooooo" >> $CUSTOM_ENV_VARIABLE
+echo "custom_env_variable='Hello my friends!'" >> $GITHUB_ENV

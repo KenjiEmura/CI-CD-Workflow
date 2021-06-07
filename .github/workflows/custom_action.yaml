@@ -28,7 +28,7 @@ jobs:
       - name: Run the greeting time
         run: |
           echo "Time: ${{ steps.hello.outputs.time }}"
-          echo "The custom env variable that we created says: $CUSTOM_ENV_VARIABLE"
+          echo "The custom env variable that we created says: ${{ env.custom_env_variable }}"
 
   create-issue-action:
     runs-on: ubuntu-latest
