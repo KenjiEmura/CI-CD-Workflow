@@ -2,7 +2,7 @@ name: Custom Action
 on:
   repository_dispatch:
     types: [custom_action]
-  
+
 jobs:
   test-action:
     runs-on: ubuntu-latest
@@ -12,5 +12,4 @@ jobs:
         id: hello
         with:
           who-to-greet: "Kenji Emura"
-      - run: |
-        echo "Time: ${{ steps.hello.outputs.time }}"
+      - run: echo "Time ${{ steps.hello.outputs.time }}"
