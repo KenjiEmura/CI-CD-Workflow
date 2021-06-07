@@ -24,7 +24,7 @@ jobs:
       - uses: ./.github/actions/generate_issue
         id: create_issue
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.ADMIN_TOKEN }}
           title: Automatic issue created from the 'custom_action.yaml'
           body: The 'custom_action.yaml' has two jobs, this issue is created from the second one.
           assignees: |
