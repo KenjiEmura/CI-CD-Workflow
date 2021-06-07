@@ -6,11 +6,11 @@
 # chmod +x .github/actions/docker_test_action/entrypoint.sh
 
 # This will make the step fail, any non-zero exit value will do that
-if [ false ]
-then
-  echo 'This is a pre-fabricated error'
-  exit 1
-fi
+# if [ true ]
+# then
+#   echo 'This is a pre-fabricated error'
+#   exit 1
+# fi
 
 echo "::debug:: This is a debug message"
 echo "::warning::This is a warning message"
