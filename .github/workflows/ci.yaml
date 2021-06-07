@@ -61,6 +61,13 @@ jobs:
         with:
           name: built-project
           path: build
+
+      - name: ZIP Assets
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          zip -r build.zip ./build     
+          zip -r coverage.zip ./coverage
+
       # Create a release using the 'semantic-release' library
       - name: Create a Release
         # Here we make sure that we only run this step when the push is being made to 'main' branch
